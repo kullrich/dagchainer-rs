@@ -144,7 +144,7 @@ pub fn perl_format_number(value: f64) -> String {
 
     let digits: String = mantissa_str.chars().filter(|c| *c != '.').collect();
 
-    let body = if exponent >= -4 && exponent < PRECISION {
+    let body = if (-4..PRECISION).contains(&exponent) {
         digits_to_fixed(&digits, exponent)
     } else {
         digits_to_sci(&digits, exponent)

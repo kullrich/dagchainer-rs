@@ -745,8 +745,7 @@ chr1\tgeneE\t500\t600\tchr3\tgeneF\t550\t650\t1e-10
 
     #[test]
     fn build_gnuplot_script_includes_only_nonempty_streams() {
-        let mut data = PlotData::default();
-        data.chains_forward = "1\t2\n".to_string();
+        let data = PlotData { chains_forward: "1\t2\n".to_string(), ..Default::default() };
 
         let script = build_gnuplot_script("myprefix", &["\"chr1\" 1".into()], &["\"chr2\" 1".into()], &data).unwrap();
         assert!(script.contains("myprefix.chains_F"));

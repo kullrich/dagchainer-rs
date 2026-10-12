@@ -512,9 +512,9 @@ fn build_alignment_output(
             false
         };
 
-        if params.ignore_tandem && (is_tandem || is_overlapping) {
-            ignore_alignment = true;
-        } else if params.tandem_only && !is_tandem {
+        if (params.ignore_tandem && (is_tandem || is_overlapping))
+            || (params.tandem_only && !is_tandem)
+        {
             ignore_alignment = true;
         }
     }

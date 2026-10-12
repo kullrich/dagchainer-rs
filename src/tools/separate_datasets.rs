@@ -169,12 +169,13 @@ mod tests {
     use std::collections::HashMap as StdHashMap;
     use std::rc::Rc;
 
+    /// Shared in-memory store of named output buffers, keyed by
+    /// molecule-pair bucket name.
+    type SharedStore = Rc<RefCell<StdHashMap<String, Vec<u8>>>>;
+
     /// Test helper: an in-memory "filesystem" of named buffers, so we can
     /// exercise `separate_datasets` without touching the real filesystem.
-    fn in_memory_sink() -> (
-        Rc<RefCell<StdHashMap<String, Vec<u8>>>>,
-        impl FnMut(&str) -> std::io::Result<Box<dyn Write>>,
-    ) {
+    fn in_memory_sink() -> (SharedStore, impl FnMut(&str) -> std::io::Result<Box<dyn Write>>) {
         let store: Rc<RefCell<StdHashMap<String, Vec<u8>>>> = Rc::new(RefCell::new(StdHashMap::new()));
         let store_clone = Rc::clone(&store);
 
