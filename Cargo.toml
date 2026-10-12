@@ -1,0 +1,43 @@
+[package]
+name = "dagchainer-rs"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.74"
+authors = ["Kristian Ullrich <ullrich@evolbio.mpg.de>"]
+description = "Rust port of DAGchainer: identifies chains of gene pairs sharing conserved order between genomic regions, by identifying paths through a directed acyclic graph (DAG) of pairwise matches."
+license = "MIT"
+repository = "https://github.com/kullrich/dagchainer-rs"
+homepage = "https://github.com/kullrich/dagchainer-rs"
+readme = "README.md"
+keywords = ["bioinformatics", "synteny", "orthology", "genomics", "dagchainer"]
+categories = ["command-line-utilities", "science"]
+
+[lib]
+name = "dagchainer_rs"
+path = "src/lib.rs"
+
+[[bin]]
+name = "dagchainer"
+path = "src/main.rs"
+
+[dependencies]
+clap = { version = "4.5", features = ["derive"] }
+anyhow = "1.0"
+thiserror = "1.0"
+log = "0.4"
+env_logger = "0.11"
+plotly = { version = "0.10", optional = true }
+regex = "1"
+
+[dev-dependencies]
+assert_cmd = "2.0"
+predicates = "3.1"
+tempfile = "3.10"
+
+[features]
+default = []
+viz = ["dep:plotly"]
+
+[profile.release]
+lto = true
+opt-level = 3
